@@ -790,7 +790,9 @@ class LoadTestsOperations:
             _content = load_test_resource_patch_request_body
         else:
             _json = self._serialize.body(load_test_resource_patch_request_body, "LoadTestResourcePatchRequestBody")
-
+            customize_body = kwargs.pop("customize_body")
+            if customize_body:
+                customize_body(_json)
         request = build_update_request(
             resource_group_name=resource_group_name,
             load_test_name=load_test_name,
