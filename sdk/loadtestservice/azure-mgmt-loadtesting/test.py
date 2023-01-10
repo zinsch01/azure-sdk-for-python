@@ -21,7 +21,7 @@ print("result1:")
 print(result1)
 
 
-# The serialized result  have null
+# The serialized result has null
 body = {'properties': {'encryption': {'identity': {'type': 'SystemAssigned', 'resourceId': None}, 'keyUrl': 'xxx'}}}
 result2 = json.dumps(body)
 print("result2:")
