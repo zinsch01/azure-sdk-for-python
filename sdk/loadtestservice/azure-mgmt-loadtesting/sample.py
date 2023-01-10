@@ -26,12 +26,10 @@ print(serialized_body)
 
 # set None manually
 serialized_body["properties"]["encryption"]["identity"].update({"resourceId": None})
-body = json.dumps(serialized_body)
-print(body)
 
 result = client.load_tests.begin_update(
     resource_group_name="groupName",
     load_test_name="testName",
-    load_test_resource_patch_request_body=body
+    load_test_resource_patch_request_body=serialized_body
 ).result()
 print(result.serialize())
