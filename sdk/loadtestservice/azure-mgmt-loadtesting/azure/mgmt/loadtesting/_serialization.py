@@ -51,6 +51,7 @@ import isodate  # type: ignore
 from typing import Dict, Any, cast
 
 from azure.core.exceptions import DeserializationError, SerializationError, raise_with_traceback
+from azure.core.serialization import NULL
 
 _BOM = codecs.BOM_UTF8.decode(encoding="utf-8")
 
@@ -777,6 +778,8 @@ class Serializer(object):
             raise ValueError("No value for given attribute")
 
         try:
+            if data is NULL:
+                return None
             if data_type in self.basic_types.values():
                 return self.serialize_basic(data, data_type, **kwargs)
 
