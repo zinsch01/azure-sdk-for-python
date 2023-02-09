@@ -46,8 +46,6 @@ def main():
         print(f"Received message from {msg.message.group}: {msg.message.data}")
         conversation.append("Human: " + msg.message.data)
         result = openai.Completion.create(engine="text-davinci-003", prompt=" ".join(conversation), max_token="256")
-        if len(result.choices) > 1:
-            raise Exception("exception")
         print(result.choices[0].text)
         conversation.append(result.choices[0].text)
         client.send_to_group(group_name, result.choices[0].text, "text", SendToGroupOptions(no_echo=True, fire_and_forget=True))

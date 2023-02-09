@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def on_group_message(msg: OnGroupDataMessageArgs):
-    print(msg.message.data)
+    print("->" + msg.message.data)
 
 
 service_client = WebPubSubServiceClient.from_connection_string(
