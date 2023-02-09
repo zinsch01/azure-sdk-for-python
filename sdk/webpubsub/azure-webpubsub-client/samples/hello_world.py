@@ -45,7 +45,7 @@ def main():
         print("========== group message =========")
         print(f"Received message from {msg.message.group}: {msg.message.data}")
         conversation.append("Human: " + msg.message.data)
-        result = openai.Completion.create(engine="text-davinci-003", prompt=" ".join(conversation))
+        result = openai.Completion.create(engine="text-davinci-003", prompt=" ".join(conversation), max_token="256")
         if len(result.choices) > 1:
             raise Exception("exception")
         print(result.choices[0].text)
