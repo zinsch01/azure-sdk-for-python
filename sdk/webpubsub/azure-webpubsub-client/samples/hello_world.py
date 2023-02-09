@@ -14,6 +14,7 @@ import openai
 
 load_dotenv()
 
+
 def main():
     service_client = WebPubSubServiceClient.from_connection_string(
         connection_string=os.getenv("WEBPUBSUB_CONNECTION_STRING"), hub="hub"
@@ -29,17 +30,17 @@ def main():
     openai.api_key = os.getenv("OPENAI_API_KEY")
     openai.api_base = os.getenv("OPENAI_API_BASE")
     openai.api_version = "2022-12-01"
-    conversation = ["Marv is a chatbot that reluctantly answers questions."]
+    conversation = [
+        "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly."
+    ]
 
     def on_connected(msg: OnConnectedArgs):
         print("======== connected ===========")
         print(f"Connection {msg.connection_id} is connected")
 
-
     def on_disconnected(msg: OnDisconnectedArgs):
         print("========== disconnected =========")
         print(f"connection is disconnected: {msg.message}")
-
 
     def on_group_message(msg: OnGroupDataMessageArgs):
         print("========== group message =========")
@@ -48,15 +49,18 @@ def main():
         result = openai.Completion.create(engine="text-davinci-003", prompt=" ".join(conversation), max_token="256")
         print(result.choices[0].text)
         conversation.append(result.choices[0].text)
-        client.send_to_group(group_name, result.choices[0].text, "text", SendToGroupOptions(no_echo=True, fire_and_forget=True))
+        client.send_to_group(
+            group_name, result.choices[0].text, "text", SendToGroupOptions(no_echo=True, fire_and_forget=True)
+        )
 
     client.on("connected", on_connected)
     client.on("disconnected", on_disconnected)
     client.on("group-message", on_group_message)
 
     client.join_group(group_name)
-    time.sleep(600)    
+    time.sleep(600)
     client.stop()
+
 
 if __name__ == "__main__":
     main()
