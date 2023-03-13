@@ -3,7 +3,7 @@
 ### Settings
 
 ```yaml
-input-files: 
+input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/main/specification/purview/data-plane/Azure.Analytics.Purview.Share/preview/2023-02-15-preview/share.json
 output-folder: ../
 namespace: azure.purview.sharing
